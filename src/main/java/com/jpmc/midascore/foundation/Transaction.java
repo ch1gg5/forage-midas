@@ -1,8 +1,12 @@
 package com.jpmc.midascore.foundation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jpmc.midascore.repository.UserRepository;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class Transaction {
     private long senderId;
     private long recipientId;
@@ -17,32 +21,10 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public long getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(long senderId) {
-        this.senderId = senderId;
-    }
-
-    public long getRecipientId() {
-        return recipientId;
-    }
-
-    public void setRecipientId(long recipientId) {
-        this.recipientId = recipientId;
-    }
-
-    public float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
 
     @Override
     public String toString() {
         return "Transaction {senderId=" + senderId + ", recipientId=" + recipientId + ", amount=" + amount + "}";
     }
+
 }
