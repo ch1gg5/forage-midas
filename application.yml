@@ -1,2 +1,16 @@
 general:
   kafka-topic: trader-updates
+
+spring:
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: midas
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
