@@ -11,6 +11,7 @@ public class Transaction {
     private long senderId;
     private long recipientId;
     private float amount;
+    private float incentive;
 
     public Transaction() {
     }

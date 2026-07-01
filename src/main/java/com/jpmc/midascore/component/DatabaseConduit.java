@@ -25,13 +25,13 @@ public class DatabaseConduit {
         // record transaction
         UserRecord sender = userRepository.findById(transaction.getSenderId()).orElse(null);
         UserRecord recipient = userRepository.findById(transaction.getRecipientId()).orElse(null);
-        TransactionRecord transactionRecord = new TransactionRecord(sender, recipient, transaction.getAmount());
+        TransactionRecord transactionRecord = new TransactionRecord(sender, recipient, transaction.getAmount(), transaction.getIncentive());
         transactionRecordRepository.save(transactionRecord);
 
         // update user balances
         sender.setBalance(sender.getBalance() - transaction.getAmount());
         save(sender);
-        recipient.setBalance(recipient.getBalance() + transaction.getAmount());
+        recipient.setBalance(recipient.getBalance() + transaction.getAmount() + transaction.getIncentive());
         save(recipient);
     }
 
@@ -52,6 +52,15 @@ public class DatabaseConduit {
         }
 
         return sender.getBalance() >= transaction.getAmount();
+    }
+
+    public float queryUserBalance(Long userId) {
+        UserRecord userRecord = userRepository.findById(userId).orElse(null);
+        if (userRecord == null) {
+            return 0;
+        } else {
+            return userRecord.getBalance();
+        }
     }
 
     public String toString(Transaction transaction) {
